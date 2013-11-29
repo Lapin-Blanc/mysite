@@ -1,8 +1,59 @@
 #!/bin/bash
-USERNAME=fabien
-PASSWORD=corine
-DOMAIN=fabien.toune.be
-EMAIL=fabien@toune.be
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -u | --user )           shift
+                                USERNAME=$1
+                                ;;
+        -m | --mail )           shift
+                                EMAIL=$1
+                                ;;
+        -d | --domain )         shift
+                                DOMAIN=$1
+                                ;;
+        -p | --password )       shift
+                                PASSWORD=$1
+                                ;;
+        -h | --help )           usage
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+while [ -z $USERNAME ]
+do
+        read -p "$(echo -e "Nom d'utilisateur : ")" USERNAME
+done
+while [ -z $EMAIL ]
+do
+        read -p "$(echo -e "Adresse email : ")" EMAIL
+done
+
+while [ -z $DOMAIN ]
+do
+        read -p "$(echo -e "Domaine : ")" DOMAIN
+done
+
+while [ -z $PASSWORD ]
+do
+        read -s -p "$(echo -e "Mot de passe : ")" PASS1
+        read -s -p "$(echo -e "\nMot de passe (vérification): ")" PASS2
+        while [ "$PASS1" != "$PASS2" ]
+        do
+                echo -e "\nles mots de passe ne concordent pas..."
+                read -s -p "$(echo -e "Mot de passe : ")" PASS1
+                read -s -p "$(echo -e "\nMot de passe (vérification): ")" PASS2
+        done
+        PASSWORD=$PASS1
+        echo -e "\n"
+done
+
+# echo 1.$USERNAME
+# echo 2.$PASSWORD
+# echo 3.$DOMAIN
+# echo 4.$EMAIL
 
 useradd $USERNAME
 echo $USERNAME:$PASSWORD | chpasswd
