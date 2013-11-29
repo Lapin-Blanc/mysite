@@ -134,3 +134,6 @@ else
     </VirtualHost>" >> /etc/httpd/conf/httpd.conf
 fi
 # echo "$USERNAME" >> /etc/vsftpd/chroot_list
+service httpd restart
+
+exit 0
