@@ -1,5 +1,15 @@
 #!/bin/bash
 
+function usage {
+    echo "$0 [OPTIONS] où les options sont :
+        -u | --user        : nom d'utilisateur
+        -m | --mail        : adresse mail
+        -d | --domain      : domaine de l'hôte virtuel
+        -p | --password    : mot de passe
+        -h | --help        : cette aide
+    "
+}
+
 while [ "$1" != "" ]; do
     case $1 in
         -u | --user )           shift
