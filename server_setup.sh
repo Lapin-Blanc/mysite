@@ -68,4 +68,53 @@ echo -e "$ADDRESS\t$DOMAINNAME $HOSTNAME" >> /etc/hosts
 # Installation d'apache 2 avec support pour xsendfile, activation des virtuals host,
 # activation des sites personnels ~utilisateur, ouverture du port dans iptables et
 # configuration du site virtuel par défaut
-yum install -y httpd{,-devel}
+yum install -y httpd{,-devel} gcc
+
+# Installation de mod_xsendfile
+wget --no-check-certificate https://tn123.org/mod_xsendfile/mod_xsendfile.c
+apxs -cia mod_xsendfile.c
+if [ ! -e /var/www/xsendfiles ] 
+then
+        mkdir -p -v /var/www/xsendfiles
+else
+        echo "/var/www/xsendfiles already exists"
+fi
+echo "XSendFile on
+XSendFilePath /var/www/xsendfiles" > /etc/httpd/conf.d/mod_xsendfile.conf
+
+# Activation des sites individuels
+sed -i "s/^\(\s*\)\(UserDir\s*disable.*\)$/\1#\2/" /etc/httpd/conf/httpd.conf
+sed -i "s/^\(\s*\)#\(\s*UserDir\s*public_html.*\)$/\1\2/" /etc/httpd/conf/httpd.conf
+
+if grep -q -F "<Directory /home/*/public_html>" /etc/httpd/conf/httpd.conf
+then
+    echo "public_html folders already configured..."
+else
+    echo "<Directory /home/*/public_html>
+        Options Indexes Includes FollowSymLinks
+        AllowOverride All
+        Allow from all
+        Order deny,allow
+</Directory>" >> /etc/httpd/conf/httpd.conf
+fi
+
+# Activation des virtual hosts
+sed -i "s/^\(\s*\)#\s*\(NameVirtualHost.*\)$/\1\2/" /etc/httpd/conf/httpd.conf
+if ! grep -q -e "^\s*ServerName\s*$DOMAINNAME" /etc/httpd/conf/httpd.conf
+then
+echo "<VirtualHost *:80>
+    ServerAdmin webmaster@$DOMAINNAME
+    DocumentRoot /www/docs/$DOMAINNAME
+    ServerName $DOMAINNAME
+    ErrorLog logs/$DOMAINNAME-error_log
+    CustomLog logs/$DOMAINNAME-access_log common
+</VirtualHost>" >> /etc/httpd/conf/httpd.conf
+fi
+
+# Ouverture du firewall
+if ! grep -e "--dport 80" /etc/sysconfig/iptables
+then
+    sed  -i '/--dport 22/{h;s//--dport 80/;H;x}' /etc/sysconfig/iptables
+fi
+service iptables restart
+service httpd restart
