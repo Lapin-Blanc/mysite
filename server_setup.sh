@@ -1,3 +1,4 @@
+#!/bin/bash
 # Configuration générale :
 # - désactivation de selinux
 # - personnalisation du bash pour root
