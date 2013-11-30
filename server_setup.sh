@@ -2,6 +2,7 @@
 # Configuration générale :
 # - désactivation de selinux
 # - personnalisation du bash pour root
+# - installation et personnalisation de vim
 
 # Désactivation de Selinux
 sed -i "s/^\(SELINUX=\).*$/\1disabled/" /etc/sysconfig/selinux
@@ -23,6 +24,10 @@ fi
 EOF
 fi
 . /root/.bashrc
+yum -y install vim
+echo "set autoexpandtab
+set ts=4
+set sw=4" >> /etc/vimrc
 
 # Configuration réseau
 # - installation des utilitaires réseaux tui
