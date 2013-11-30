@@ -104,7 +104,7 @@ if ! grep -q -e "^\s*ServerName\s*$DOMAINNAME" /etc/httpd/conf/httpd.conf
 then
 echo "<VirtualHost *:80>
     ServerAdmin webmaster@$DOMAINNAME
-    DocumentRoot /www/docs/$DOMAINNAME
+    DocumentRoot /var/www/html
     ServerName $DOMAINNAME
     ErrorLog logs/$DOMAINNAME-error_log
     CustomLog logs/$DOMAINNAME-access_log common
