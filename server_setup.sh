@@ -25,7 +25,7 @@ EOF
 fi
 . /root/.bashrc
 yum -y install vim
-echo "set autoexpandtab
+echo "set expandtab
 set ts=4
 set sw=4" >> /etc/vimrc
 
