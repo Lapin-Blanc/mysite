@@ -118,3 +118,6 @@ then
 fi
 service iptables restart
 service httpd restart
+chkconfig on
+
+reboot
