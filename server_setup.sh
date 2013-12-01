@@ -69,7 +69,7 @@ echo -e "$ADDRESS\t$DOMAINNAME $HOSTNAME" >> /etc/hosts
 # activation des sites personnels ~utilisateur, ouverture du port dans iptables et
 # configuration du site virtuel par défaut
 yum install -y httpd{,-devel} gcc
-
+echo -E "<h1>Welcome to CentOS Server</h1>" > /var/www/html/index.html
 # Installation de mod_xsendfile
 wget --no-check-certificate https://tn123.org/mod_xsendfile/mod_xsendfile.c
 apxs -cia mod_xsendfile.c
