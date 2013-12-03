@@ -83,10 +83,10 @@ else
     export PS1="\[\e[00;36m\]\A\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[00;31m\]\u\[\e[0m\]\[\e[00;33m\]@\[\e[0m\]\[\e[00;37m\]\H \[\e[0m\]\[\e[00;32m\]\w\[\e[0m\]\[\e[00;37m\] \[\e[0m\]\[\e[00;33m\]\$\[\e[0m\]\[\e[00;37m\] \[\e[0m\]"
 fi
 
-alias python=\$(which python2.7)
+# alias python=\$(which python2.7)
 
-export VIRTUALENVWRAPPER_PYTHON=\$(which python2.7)
-source /usr/local/bin/virtualenvwrapper.sh
+# export VIRTUALENVWRAPPER_PYTHON=\$(which python2.7)
+# source /usr/local/bin/virtualenvwrapper.sh
 EOF
 
 if ! grep -s "$USERNAME" /etc/vsftpd/chroot_list
