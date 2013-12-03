@@ -137,6 +137,9 @@ if ! grep -e "--dport 21" /etc/sysconfig/iptables
 then
     sed  -i '/--dport 80/{h;s//--dport 21/;H;x}' /etc/sysconfig/iptables
 fi
+# Chargement du module ip_nat_ftp de iptables
+sed -i "s/^\([^#]*\)ip_nat_ftp\s*\(.*\)$/\1\2/g" /etc/sysconfig/iptables-config
+sed -i "s/^\(IPTABLES_MODULES=\"\)\(.*$\)/\1ip_nat_ftp \2/" /etc/sysconfig/iptables-config
 service iptables restart
 chkconfig vsftpd on
 service vsftpd start
