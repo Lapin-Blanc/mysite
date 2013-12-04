@@ -49,7 +49,7 @@ done
 
 while [ -z $HOST_NAME ]
 do
-        read -p "$(echo -e "Nom d'hôte : ")" HOST_NAME
+        read -p "$(echo -e "Nom du serveur : ")" HOST_NAME
 done
 
 ################ Début du processus
