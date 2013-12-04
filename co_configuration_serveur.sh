@@ -123,18 +123,21 @@ echo -e "$ADDRESS\t$DOMAINNAME $HOST_NAME" >> /etc/hosts
 yum install -y httpd{,-devel} gcc php php-sqlite3 php-gd
 echo -E "<h1>Welcome to CentOS Server</h1>" > /var/www/html/index.html
 # Installation de mod_xsendfile
-pushd /usr/src
-wget --no-check-certificate https://tn123.org/mod_xsendfile/mod_xsendfile.c
-apxs -cia mod_xsendfile.c
-if [ ! -e /var/www/xsendfiles ] 
+httpd -M | if ! grep -q "xsendfile_module"
 then
-        mkdir -p -v /var/www/xsendfiles
-else
-        echo "/var/www/xsendfiles already exists"
+    pushd /usr/src
+    wget --no-check-certificate https://tn123.org/mod_xsendfile/mod_xsendfile.c
+    apxs -cia mod_xsendfile.c
+    if [ ! -e /var/www/xsendfiles ] 
+    then
+            mkdir -p -v /var/www/xsendfiles
+    else
+            echo "/var/www/xsendfiles already exists"
+    fi
+    echo "XSendFile on
+    XSendFilePath /var/www/xsendfiles" > /etc/httpd/conf.d/mod_xsendfile.conf
+    popd
 fi
-echo "XSendFile on
-XSendFilePath /var/www/xsendfiles" > /etc/httpd/conf.d/mod_xsendfile.conf
-popd
 
 # Activation des sites individuels
 sed -i "s/^\(\s*\)\(UserDir\s*disable.*\)$/\1#\2/" /etc/httpd/conf/httpd.conf
