@@ -10,8 +10,7 @@ function usage {
         -a | --address        : adresse IP du serveur
         -g | --gateway        : passerelle par défaut du serveur
         -d | --domain         : domaine du serveur
-        -H | --hostname       : nom d'hôte de la machine
-        -h | --help           : cette aide
+        -h | --hostname       : nom d'hôte de la machine
     "
 }
 
@@ -20,16 +19,13 @@ while [ "$1" != "" ]; do
         -a | --address )        shift
                                 ADDRESS=$1
                                 ;;
-        #-m | --netmask )       shift
-        #                       NETMASK=$1
-        #                       ;;
         -g | --gateway )        shift
                                 GATEWAY=$1
                                 ;;
         -d | --domain )         shift
                                 DOMAIN=$1
                                 ;;
-        -H | --hostname )       HOST_NAME=$1
+        -h | --hostname )       HOST_NAME=$1
                                 shift
                                 ;;
         * )                     usage
