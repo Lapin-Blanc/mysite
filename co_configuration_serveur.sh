@@ -181,8 +181,6 @@ chkconfig httpd on
 # Installation et configuration de vsftpd
 yum -y install vsftpd
 sed -i "s/^\(anonymous_enable=\).*$/\1NO/" /etc/vsftpd/vsftpd.conf
-sed -i "s/^[# ]*\(ls_recurse_enable=\).*$/\1YES/" /etc/vsftpd/vsftpd.conf
-sed -i "s/^[# ]*\(chroot_local_user=\).*$/\1NO/" /etc/vsftpd/vsftpd.conf
 sed -i "s/^[# ]*\(chroot_list_enable=\).*$/\1YES/" /etc/vsftpd/vsftpd.conf
 sed -i "s/^[# ]*\(chroot_list_file=.*\)$/\1/" /etc/vsftpd/vsftpd.conf
 touch /etc/vsftpd/chroot_list
