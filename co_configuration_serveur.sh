@@ -17,20 +17,20 @@ function usage {
 
 while [ "$1" != "" ]; do
     case $1 in
-        -a | --address )           shift
+        -a | --address )        shift
                                 ADDRESS=$1
                                 ;;
-        #-m | --netmask )           shift
-        #                        NETMASK=$1
-        #                        ;;
-        -g | --gateway )         shift
+        #-m | --netmask )       shift
+        #                       NETMASK=$1
+        #                       ;;
+        -g | --gateway )        shift
                                 GATEWAY=$1
                                 ;;
         -d | --domain )         shift
                                 DOMAIN=$1
                                 ;;
         -H | --hostname )       HOST_NAME=$1
-                                exit
+                                shift
                                 ;;
         * )                     usage
                                 exit 1
