@@ -29,7 +29,7 @@ while [ "$1" != "" ]; do
         -d | --domain )         shift
                                 DOMAIN=$1
                                 ;;
-        -H | --hostname )           HOSTNAME=$1
+        -H | --hostname )       HOST_NAME=$1
                                 exit
                                 ;;
         * )                     usage
@@ -51,9 +51,9 @@ do
         read -p "$(echo -e "Domaine : ")" DOMAIN
 done
 
-while [ -z $HOSTNAME ]
+while [ -z $HOST_NAME ]
 do
-        read -p "$(echo -e "Nom d\'hôte : ")" HOSTNAME
+        read -p "$(echo -e "Nom d\'hôte : ")" HOST_NAME
 done
 
 ################ Début du processus
@@ -92,7 +92,7 @@ PREFIX=24
 #GATEWAY=192.168.1.1
 #HOSTNAME=serveur
 #DOMAIN=toune.be
-DOMAINNAME=$HOSTNAME.$DOMAIN
+DOMAINNAME=$HOST_NAME.$DOMAIN
 # yum -y install system-config-{firewall,network}-tui
 
 # passe en adressage dynamique
@@ -109,16 +109,16 @@ GATEWAY=$GATEWAY
 DEFROUTE=yes" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 
 # modifie le nom d'hôte
-sed -i "s/$HOSTNAME //g" /etc/hosts
+sed -i "s/$HOST_NAME //g" /etc/hosts
 sed -i "s/^\(HOSTNAME=\).*$/\1$DOMAINNAME/" /etc/sysconfig/network
-sed -i "s/^\(127\.0\.0\.1.*\)\(localhost .*\)$/\1$HOSTNAME \2/" /etc/hosts
-sed -i "s/^\(::1.*\)\(localhost .*\)$/\1$HOSTNAME \2/" /etc/hosts
+sed -i "s/^\(127\.0\.0\.1.*\)\(localhost .*\)$/\1$HOST_NAME \2/" /etc/hosts
+sed -i "s/^\(::1.*\)\(localhost .*\)$/\1$HOST_NAME \2/" /etc/hosts
 
 if grep -q "$ADDRESS" /etc/hosts
 then
     sed -i "/$ADDRESS.*/d" /etc/hosts
 fi
-echo -e "$ADDRESS\t$DOMAINNAME $HOSTNAME" >> /etc/hosts 
+echo -e "$ADDRESS\t$DOMAINNAME $HOST_NAME" >> /etc/hosts 
 
 # Installation d'apache 2 avec support pour xsendfile, activation des virtuals host,
 # activation des sites personnels ~utilisateur, ouverture du port dans iptables et
