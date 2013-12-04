@@ -43,7 +43,7 @@ do
 done
 while [ -z $GATEWAY ]
 do
-        read -p "$(echo -e "Adress IP passerelle : ")" GATEWAY
+        read -p "$(echo -e "Adresse IP passerelle : ")" GATEWAY
 done
 
 while [ -z $DOMAIN ]
@@ -53,7 +53,7 @@ done
 
 while [ -z $HOST_NAME ]
 do
-        read -p "$(echo -e "Nom d\'hôte : ")" HOST_NAME
+        read -p "$(echo -e "Nom d'hôte : ")" HOST_NAME
 done
 
 ################ Début du processus
@@ -110,6 +110,7 @@ DEFROUTE=yes" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 
 # modifie le nom d'hôte
 sed -i "s/$HOST_NAME //g" /etc/hosts
+sed -i "s/$DOMAINNAME //g" /etc/hosts
 sed -i "s/^\(HOSTNAME=\).*$/\1$DOMAINNAME/" /etc/sysconfig/network
 sed -i "s/^\(127\.0\.0\.1.*\)\(localhost .*\)$/\1$HOST_NAME \2/" /etc/hosts
 sed -i "s/^\(::1.*\)\(localhost .*\)$/\1$HOST_NAME \2/" /etc/hosts
