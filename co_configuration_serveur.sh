@@ -25,8 +25,8 @@ while [ "$1" != "" ]; do
         -d | --domain )         shift
                                 DOMAIN=$1
                                 ;;
-        -h | --hostname )       HOST_NAME=$1
-                                shift
+        -h | --hostname )       shift
+                                HOST_NAME=$1
                                 ;;
         * )                     usage
                                 exit 1
