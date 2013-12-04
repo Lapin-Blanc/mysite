@@ -70,7 +70,7 @@ echo -e "$ADDRESS\t$DOMAINNAME $HOSTNAME" >> /etc/hosts
 # Installation d'apache 2 avec support pour xsendfile, activation des virtuals host,
 # activation des sites personnels ~utilisateur, ouverture du port dans iptables et
 # configuration du site virtuel par défaut
-yum install -y httpd{,-devel} gcc
+yum install -y httpd{,-devel} gcc php php-sqlite3
 echo -E "<h1>Welcome to CentOS Server</h1>" > /var/www/html/index.html
 # Installation de mod_xsendfile
 pushd /usr/src
