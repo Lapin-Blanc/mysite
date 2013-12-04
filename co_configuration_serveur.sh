@@ -4,6 +4,59 @@
 # - désactivation de selinux
 # - personnalisation du bash pour root
 # - installation et personnalisation de vim
+
+function usage {
+    echo "$0 [OPTIONS] où les options sont :
+        -a | --address        : adresse IP du serveur
+        -g | --gateway        : passerelle par défaut du serveur
+        -d | --domain         : domaine du serveur
+        -H | --hostname       : nom d'hôte de la machine
+        -h | --help           : cette aide
+    "
+}
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -a | --address )           shift
+                                ADDRESS=$1
+                                ;;
+        #-m | --netmask )           shift
+        #                        NETMASK=$1
+        #                        ;;
+        -g | --gateway )         shift
+                                GATEWAY=$1
+                                ;;
+        -d | --domain )         shift
+                                DOMAIN=$1
+                                ;;
+        -H | --hostname )           HOSTNAME=$1
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+while [ -z $ADDRESS ]
+do
+        read -p "$(echo -e "Adresse IP statique : ")" ADDRESS
+done
+while [ -z $GATEWAY ]
+do
+        read -p "$(echo -e "Adress IP passerelle : ")" GATEWAY
+done
+
+while [ -z $DOMAIN ]
+do
+        read -p "$(echo -e "Domaine : ")" DOMAIN
+done
+
+while [ -z $HOSTNAME ]
+do
+        read -p "$(echo -e "Nom d\'hôte : ")" HOSTNAME
+done
+
+################ Début du processus
 yum -y uprade
 
 # Désactivation de Selinux
@@ -34,11 +87,11 @@ set sw=4" >> /etc/vimrc
 # Configuration réseau
 # - installation des utilitaires réseaux tui
 # - définition du nom de domaine et d'hôte
-ADDRESS=192.168.1.125
+#ADDRESS=192.168.1.125
 PREFIX=24
-GATEWAY=192.168.1.1
-HOSTNAME=serveur
-DOMAIN=toune.be
+#GATEWAY=192.168.1.1
+#HOSTNAME=serveur
+#DOMAIN=toune.be
 DOMAINNAME=$HOSTNAME.$DOMAIN
 # yum -y install system-config-{firewall,network}-tui
 
