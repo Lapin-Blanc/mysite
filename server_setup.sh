@@ -14,6 +14,7 @@ then
     echo "Prompt already customized"
 else
     cat >> /root/.bashrc <<-EOF
+
 # Customize the prompt
 if [ \$(id -u) -eq 0 ];
 then # you are root, make the prompt red
